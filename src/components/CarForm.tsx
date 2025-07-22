@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import type { Car } from "../types/car";
+import Button from "./Button";
+import { Upload, X } from "lucide-react";
 
 const CarForm: React.FC<{
   car?: Car;
@@ -92,20 +94,20 @@ const CarForm: React.FC<{
       </div>
 
       <div className="flex justify-end space-x-3 pt-4">
-        <button
-          type="button"
+        <Button
+          label="Cancel"
+          icon={X}
+          variant="danger"
           onClick={onCancel}
-          className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
+          className="px-5 py-2"
+        />
+        <Button
+          label="Submit"
+          icon={Upload}
+          variant="primary"
           onClick={handleSubmit(onSubmit)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          {car ? "Update" : "Create"}
-        </button>
+          className="px-5 py-2"
+        />
       </div>
     </div>
   );

@@ -139,14 +139,6 @@ function App() {
     return d.toLocaleDateString("id-ID");
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full">
-        <div className="animate-spin rounded-full h-14 w-14 border-4 border-blue-600 border-t-transparent"></div>
-      </div>
-    );
-  }
-
   return (
     <section className="flex flex-col justify-center items-center h-full">
       <div className="gap-2">
@@ -159,7 +151,7 @@ function App() {
         <div className="bg-gray-200 rounded-lg p-2 shadow-lg space-x-2">
           <button
             onClick={() => setActiveTab("cars")}
-            className={`px-6 py-3 rounded-md font-medium transition-all cursor-pointer ${
+            className={`w-60 px-6 py-3 rounded-md font-medium transition-all cursor-pointer ${
               activeTab === "cars"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-300 text-gray-700"
@@ -169,7 +161,7 @@ function App() {
           </button>
           <button
             onClick={() => setActiveTab("orders")}
-            className={`px-6 py-3 rounded-md font-medium transition-all cursor-pointer ${
+            className={`w-60 px-6 py-3 rounded-md font-medium transition-all cursor-pointer ${
               activeTab === "orders"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-300 text-gray-700"
@@ -179,6 +171,12 @@ function App() {
           </button>
         </div>
       </div>
+
+      {loading && (
+        <div className="absolute inset-0 bg-white/50 z-50 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-14 w-14 border-4 border-blue-600 border-t-transparent"></div>
+        </div>
+      )}
 
       {!loading && activeTab === "cars" && (
         <div className="flex flex-col items-end w-full max-w-6xl py-4">
@@ -250,25 +248,25 @@ function App() {
 
       {!loading && activeTab === "orders" && (
         <div className="flex flex-col items-end w-full max-w-6xl py-4">
-          <button
+          <Button
+            label="Add Order"
+            icon={Plus}
+            variant="primary"
             onClick={() => setModalOpen(true)}
-            className="flex justify-end bg-green-800 hover:bg-green-700  px-5 py-2 text-white rounded-lg cursor-pointer"
-          >
-            <Plus size={24} className="text-white transition" />
-            <span>Add Order</span>
-          </button>
-          <div className="space-y-4 py-4">
+            className="px-5 py-2"
+          />
+          <div className="mt-6 w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2  gap-6">
             {orders.length === 0 ? (
-              <div className="text-center py-12 text-gray-500 border border-dashed rounded-lg">
+              <div className="col-span-full text-center py-12 text-gray-500 border border-dashed rounded-lg">
                 No orders found. Create your first order to get started.
               </div>
             ) : (
               orders.map((order) => (
                 <div
                   key={order.id}
-                  className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition"
+                  className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition "
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                  <div className="flex flex-col">
                     <div>
                       <h3 className="font-semibold text-lg text-gray-900">
                         {getCarName(order.car_id)}
